@@ -13,7 +13,11 @@ int main(void)
         return -1;
     }
 
-    cv::imshow("Image", frame);
+    cv::Mat grayFrame;
+
+    cv::cvtColor(frame, grayFrame, cv::COLOR_BGR2GRAY);
+
+    cv::imshow("Image", grayFrame);
 
     while (true)
     {
