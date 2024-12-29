@@ -72,6 +72,14 @@ int main(int argc, char** argv)
 
     cv::imshow("Input", src);
 
+    while (true)
+    {
+        if (cv::waitKey(30) == 'q')
+        {
+            break;
+        }
+    }
+
     cv::Mat gray;
     cv::cvtColor(src, gray, cv::COLOR_BGR2GRAY);
 
@@ -96,7 +104,13 @@ int main(int argc, char** argv)
 
     cv::imshow("Output", src);
 
-    cv::waitKey(1);
+    while (true)
+    {
+        if (cv::waitKey(30) == 'q')
+        {
+            break;
+        }
+    }
 
     return EXIT_SUCCESS;
 }
