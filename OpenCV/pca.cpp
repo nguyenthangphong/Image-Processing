@@ -8,20 +8,20 @@ double getOrientation(const std::vector<cv::Point>&, cv::Mat&);
 
 void drawAxis(cv::Mat& img, cv::Point p, cv::Point q, cv::Scalar colour, const float scale = 0.2)
 {
-    double angle = cv::atan2((double)p.y - q.y, (double)p.x - q.x);
-    double hypotenuse = cv::sqrt((double)(p.y - q.y) * (p.y - q.y) + (p.x - q.x) * (p.x - q.x));
+    double angle = std::atan2((double)p.y - q.y, (double)p.x - q.x);
+    double hypotenuse = std::sqrt((double)(p.y - q.y) * (p.y - q.y) + (p.x - q.x) * (p.x - q.x));
 
-    q.x = (int)(p.x - scale * hypotenuse * cv::cos(angle));
-    q.y = (int)(p.y - scale * hypotenuse * cv::sin(angle));
-    cv::line(img, p, q, colour, 1, LINE_AA);
+    q.x = (int)(p.x - scale * hypotenuse * std::cos(angle));
+    q.y = (int)(p.y - scale * hypotenuse * std::sin(angle));
+    cv::line(img, p, q, colour, 1, cv::LINE_AA);
 
-    p.x = (int)(q.x + 9 * cv::cos(angle + CV_PI / 4));
-    p.y = (int)(q.y + 9 * cv::sin(angle + CV_PI / 4));
-    cv::line(img, p, q, colour, 1, LINE_AA);
+    p.x = (int)(q.x + 9 * std::cos(angle + CV_PI / 4));
+    p.y = (int)(q.y + 9 * std::sin(angle + CV_PI / 4));
+    cv::line(img, p, q, colour, 1, cv::LINE_AA);
 
-    p.x = (int)(q.x + 9 * cv::cos(angle - CV_PI / 4));
-    p.y = (int)(q.y + 9 * cv::sin(angle - CV_PI / 4));
-    cv::line(img, p, q, colour, 1, LINE_AA);
+    p.x = (int)(q.x + 9 * std::cos(angle - CV_PI / 4));
+    p.y = (int)(q.y + 9 * std::sin(angle - CV_PI / 4));
+    cv::line(img, p, q, colour, 1, cv::LINE_AA);
 }
 
 double getOrientation(const std::vector<cv::Point>& pts, cv::Mat& img)
@@ -51,10 +51,10 @@ double getOrientation(const std::vector<cv::Point>& pts, cv::Mat& img)
     cv::Point p1 = cntr + 0.02 * cv::Point(static_cast<int>(eigen_vecs[0].x * eigen_val[0]), static_cast<int>(eigen_vecs[0].y * eigen_val[0]));
     cv::Point p2 = cntr - 0.02 * cv::Point(static_cast<int>(eigen_vecs[1].x * eigen_val[1]), static_cast<int>(eigen_vecs[1].y * eigen_val[1]));
 
-    cv::drawAxis(img, cntr, p1, cv::Scalar(0, 255, 0), 1);
-    cv::drawAxis(img, cntr, p2, cv::Scalar(255, 255, 0), 5);
+    drawAxis(img, cntr, p1, cv::Scalar(0, 255, 0), 1);
+    drawAxis(img, cntr, p2, cv::Scalar(255, 255, 0), 5);
 
-    double angle = cv::atan2(eigen_vecs[0].y, eigen_vecs[0].x);
+    double angle = std::atan2(eigen_vecs[0].y, eigen_vecs[0].x);
 
     return angle;
 }
@@ -70,7 +70,7 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    cv::imshow("Image", src);
+    cv::imshow("Input", src);
 
     cv::Mat gray;
     cv::cvtColor(src, gray, cv::COLOR_BGR2GRAY);
@@ -94,7 +94,7 @@ int main(int argc, char** argv)
         getOrientation(contours[i], src);
     }
 
-    cv::imshow("output", src);
+    cv::imshow("Output", src);
 
     cv::waitKey(1);
 
