@@ -73,13 +73,13 @@ int main(int argc, char** argv)
     cv::imshow("Image", src);
 
     cv::Mat gray;
-    cv::cvtColor(src, gray, COLOR_BGR2GRAY);
+    cv::cvtColor(src, gray, cv::COLOR_BGR2GRAY);
 
     cv::Mat bw;
-    cv::threshold(gray, bw, 50, 255, THRESH_BINARY | THRESH_OTSU);
+    cv::threshold(gray, bw, 50, 255, cv::THRESH_BINARY | cv::THRESH_OTSU);
 
     std::vector<std::vector<cv::Point>> contours;
-    cv::findContours(bw, contours, RETR_LIST, CHAIN_APPROX_NONE);
+    cv::findContours(bw, contours, cv::RETR_LIST, cv::CHAIN_APPROX_NONE);
 
     for (size_t i = 0; i < contours.size(); i++)
     {
