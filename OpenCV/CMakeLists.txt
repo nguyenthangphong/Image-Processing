@@ -8,6 +8,6 @@ find_package(OpenCV REQUIRED)
 
 include_directories(${OpenCV_INCLUDE_DIRS})
 
-add_executable(main pca.cpp)
+add_executable(main mat.cpp)
 
 target_link_libraries(main ${OpenCV_LIBS})
