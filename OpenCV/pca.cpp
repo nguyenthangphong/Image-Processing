@@ -68,7 +68,7 @@ int main(int argc, char** argv)
 
     if (discriminant < 0)
     {
-        std::cerr << "Error: No real eigenvalues ." << std::endl;
+        std::cerr << "Error: No real eigenvalues." << std::endl;
         return -1; 
     }
 
@@ -77,18 +77,55 @@ int main(int argc, char** argv)
 
     std::cout << "Eigenvalues:\n" << eigenvalues << std::endl;
 
-    cv::Mat eigenvectors = cv::Mat::zeros(2, 1, CV_64F);
+    cv::Mat eigenvectors = cv::Mat::zeros(2, 2, CV_64F);
 
-    for (int i = 0; i < 2; i++)
+    if (eigenvalues.at<double>(0, 0) > eigenvalues.at<double>(1, 0))
     {
-        
+        eigenvectors.at<double>(0, 0) = covYX;
+        eigenvectors.at<double>(0, 1) = covYY - eigenvalues.at<double>(1, 0);
+        eigenvectors.at<double>(1, 0) = covXX - eigenvalues.at<double>(0, 0);
+        eigenvectors.at<double>(1, 1) = covXY;
     }
+    else
+    {
+        eigenvectors.at<double>(0, 0) = covXX - eigenvalues.at<double>(0, 0);
+        eigenvectors.at<double>(1, 1) = covXY;
+        eigenvectors.at<double>(1, 0) = covYX;
+        eigenvectors.at<double>(1, 1) = covYY - eigenvalues.at<double>(1, 0);
+    }
+
+    double norm1 = std::sqrt(eigenvectors.at<double>(0, 0) * eigenvectors.at<double>(0, 0) + eigenvectors.at<double>(0, 1) * eigenvectors.at<double>(0, 1));
+    double norm2 = std::sqrt(eigenvectors.at<double>(1, 0) * eigenvectors.at<double>(1, 0) + eigenvectors.at<double>(1, 1) * eigenvectors.at<double>(1, 1));
+
+    if (norm1 > 0)
+    {
+        eigenvectors.at<double>(0, 0) /= norm1;
+        eigenvectors.at<double>(0, 1) /= norm1;
+    }
+
+    if (norm2 > 0)
+    {
+        eigenvectors.at<double>(1, 0) /= norm2;
+        eigenvectors.at<double>(1, 1) /= norm2;
+    }
+
+    std::cout << "Eigenvectors:\n" << eigenvectors << std::endl;
+
+    std::cout << "\n**************************************************\n" << std::endl;
     
-    /* PCA */
-    cv::PCA pca = cv::PCA(dataMatrix, cv::Mat(), cv::PCA::DATA_AS_ROW);
-    std::cout << "Mean of PCA: \n" << pca.mean << std::endl;
-    std::cout << "Eigenvalues of PCA: \n" << pca.eigenvalues << std::endl;
-    std::cout << "Eigenvectors of PCA: \n" << pca.eigenvectors << std::endl;
+    /* PCACompute function */
+    cv::PCACompute(dataMatrix, mean, eigenvectors, eigenvalues, 3);
+    std::cout << "Mean of PCACompute:\n" << mean << std::endl;
+    std::cout << "Eigenvalues of PCACompute:\n" << eigenvalues << std::endl;
+    std::cout << "Eigenvectors of PCACompute:\n" << eigenvectors << std::endl;
+
+    std::cout << "\n**************************************************\n" << std::endl;
+
+    /* PCA class */
+    cv::PCA pca = cv::PCA(dataMatrix, mean, cv::PCA::DATA_AS_ROW);
+    std::cout << "Mean of PCA class:\n" << pca.mean << std::endl;
+    std::cout << "Eigenvalues of PCA class:\n" << pca.eigenvalues << std::endl;
+    std::cout << "Eigenvectors of PCA class:\n" << pca.eigenvectors << std::endl;
 
     return 0;
 }
