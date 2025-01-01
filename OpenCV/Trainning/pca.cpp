@@ -15,6 +15,9 @@ int main(int argc, char** argv)
         dataMatrix.at<double>(i, 1) = dataVector[i].y;
     }
 
+    std::cout << "Data matrix:\n" << dataMatrix << std::endl;
+    std::cout << "**************************************************" << std::endl;
+
     /* Calculate the empirical mean */
     cv::Mat mean = cv::Mat::zeros(1, 2, CV_64F);
     
@@ -111,7 +114,7 @@ int main(int argc, char** argv)
 
     std::cout << "Eigenvectors:\n" << eigenvectors << std::endl;
 
-    std::cout << "\n**************************************************\n" << std::endl;
+    std::cout << "**************************************************" << std::endl;
     
     /* PCACompute function */
     cv::PCACompute(dataMatrix, mean, eigenvectors, eigenvalues, 3);
@@ -119,7 +122,7 @@ int main(int argc, char** argv)
     std::cout << "Eigenvalues of PCACompute:\n" << eigenvalues << std::endl;
     std::cout << "Eigenvectors of PCACompute:\n" << eigenvectors << std::endl;
 
-    std::cout << "\n**************************************************\n" << std::endl;
+    std::cout << "**************************************************" << std::endl;
 
     /* PCA class */
     cv::PCA pca = cv::PCA(dataMatrix, mean, cv::PCA::DATA_AS_ROW);
