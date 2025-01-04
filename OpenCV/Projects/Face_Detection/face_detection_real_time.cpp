@@ -13,7 +13,7 @@ int main(int argc, const char** argv)
     faceCascadeName = "../../Face_Detection/haarcascades/haarcascade_frontalface_default.xml";
     faceCascade = cv::CascadeClassifier(faceCascadeName);
 
-    if (!faceCascade.empty())
+    if (faceCascade.empty())
     {
         std::cout << "Error: Could not loading face cascade." << std::endl;
         return -1;
