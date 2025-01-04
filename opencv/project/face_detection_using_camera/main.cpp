@@ -24,7 +24,7 @@ int main(int argc, const char** argv)
 
     if (!capture.isOpened())
     {
-        std::cerr << "Error: Could not loading video." << std::endl;
+        std::cerr << "Error: Could not loading camera." << std::endl;
         return -1;
     }
 
@@ -42,9 +42,14 @@ int main(int argc, const char** argv)
 
         if (src.empty())
         {
-            std::cerr << "Error: Could not loading the image from the video." << std::endl;
+            std::cerr << "Error: Could not loading the image from the camera." << std::endl;
             break;
         }
+
+        /* Resize the image */
+        int width = 768;
+        int height = 432;
+        cv::resize(src, dst, cv::Size(width, height));
 
         /* Convert the RGB to GRAY format */
         cv::Mat gray;
