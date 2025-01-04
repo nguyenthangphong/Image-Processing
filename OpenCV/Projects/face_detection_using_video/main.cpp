@@ -3,10 +3,8 @@
 
 int main(int argc, const char** argv)
 {
-    cv::CommandLineParser parser = cv::CommandLineParser(argc, argv, "{camera|0|Camera device number.}");
-
     /* Load the haarcasecade */
-    std::string faceCascadeName = "../../Face_Detection/haarcascades/haarcascade_frontalface_alt.xml";
+    std::string faceCascadeName = "../../haarcascades/haarcascade_frontalface_alt.xml";
     cv::CascadeClassifier faceCascade = cv::CascadeClassifier(faceCascadeName);
 
     if (faceCascade.empty())
@@ -15,12 +13,8 @@ int main(int argc, const char** argv)
         return -1;
     }
 
-    /* Read the camera stream */
-    int cameraDevice = parser.get<int>("camera");
-
     /* Load the video */
-    cv::VideoCapture capture;
-    capture.open(cameraDevice);
+    cv::VideoCapture capture(argv[1]);
 
     if (!capture.isOpened())
     {
@@ -32,10 +26,10 @@ int main(int argc, const char** argv)
     double fps = 0.0;
     double startTime = cv::getTickCount();
 
-    int width = 640;
-    int height = 480;
-    capture.set(cv::CAP_PROP_FRAME_WIDTH, width);
-    capture.set(cv::CAP_PROP_FRAME_HEIGHT, height);
+    int width = static_cast<int>(capture.get(cv::CAP_PROP_FRAME_WIDTH));
+    int height = static_cast<int>(capture.get(cv::CAP_PROP_FRAME_HEIGHT));
+
+    std::cout << "width : " << width << ", height : " << height << std::endl;
 
     cv::Mat src;
 
@@ -50,6 +44,9 @@ int main(int argc, const char** argv)
             std::cerr << "Error: Could not loading the image from the video." << std::endl;
             break;
         }
+
+        /* Resize the image */
+        cv::resize(src, dst, cv::Size(width / 5, height / 5));
 
         /* Convert the RGB to GRAY format */
         cv::Mat gray;
