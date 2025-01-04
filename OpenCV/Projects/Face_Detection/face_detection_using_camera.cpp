@@ -51,9 +51,6 @@ int main(int argc, const char** argv)
             break;
         }
 
-        /* Resize the image */
-        cv::resize(src, dst, cv::Size(width / 5, height / 5));
-
         /* Convert the RGB to GRAY format */
         cv::Mat gray;
         cv::cvtColor(dst, gray, cv::COLOR_BGR2GRAY);
