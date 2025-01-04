@@ -1,0 +1,7 @@
+project(project)
+cmake_minimum_required(VERSION 3.10)
+
+add_subdirectory(face_detection_using_image)
+add_subdirectory(face_detection_using_video)
+add_subdirectory(face_detection_using_camera)
+add_subdirectory(measure_size_object)
