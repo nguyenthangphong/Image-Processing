@@ -26,11 +26,6 @@ int main(int argc, const char** argv)
     double fps = 0.0;
     double startTime = cv::getTickCount();
 
-    int width = static_cast<int>(capture.get(cv::CAP_PROP_FRAME_WIDTH));
-    int height = static_cast<int>(capture.get(cv::CAP_PROP_FRAME_HEIGHT));
-
-    std::cout << "width : " << width << ", height : " << height << std::endl;
-
     cv::Mat src;
 
     while (true)
@@ -46,7 +41,9 @@ int main(int argc, const char** argv)
         }
 
         /* Resize the image */
-        cv::resize(src, dst, cv::Size(width / 5, height / 5));
+        int width = 768;
+        int height = 432;
+        cv::resize(src, dst, cv::Size(width, height));
 
         /* Convert the RGB to GRAY format */
         cv::Mat gray;
