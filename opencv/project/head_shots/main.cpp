@@ -24,18 +24,27 @@ int main(int argc, const char** argv)
 
         cv::imshow("Press space to take a photo", frame);
 
-        /* Esc pressed */
-        if (cv::waitKey(1) == 27)
+        int key = cv::waitKey(1);
+        /* Q pressed */
+        if (key == 'q')
         {
             std::cout << "Escape hit, closing..." << std::endl;
             break;
         }
-        /* Space pressed */
-        else if (cv::waitKey(1) == 32)
+        /* Enter pressed */
+        else if (key == 13)
         {
             std::string imageName = "../../dataset/" + name + "/image_" + std::to_string(countImage) + ".jpg";
-            cv::imwrite(imageName, frame);
-            std::cout << imageName << " written!" << std::endl;
+
+            if (!cv::imwrite(imageName, frame))
+            {
+                std::cerr << "Error: Failed to save image " << imageName << std::endl;
+            }
+            else
+            {
+                std::cout << imageName << " written!" << std::endl;
+            }
+
             countImage += 1;
         }
     }
