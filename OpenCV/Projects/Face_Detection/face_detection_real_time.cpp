@@ -10,9 +10,10 @@ int main(int argc, const char** argv)
     cv::CommandLineParser parser = cv::CommandLineParser(argc, argv, "{camera|0|Camera device number.}");
 
     /* Load the haarcasecade */
-    faceCascadeName = "../../Face_Detection/haarcascades/haarcascade_frontalface_alt2.xml";
+    faceCascadeName = "../../Face_Detection/haarcascades/haarcascade_frontalface_default.xml";
+    faceCascade = cv::CascadeClassifier(faceCascadeName);
 
-    if (!faceCascade.load(faceCascadeName))
+    if (!faceCascade.empty())
     {
         std::cout << "Error: Could not loading face cascade." << std::endl;
         return -1;
