@@ -9,3 +9,4 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(OpenCV REQUIRED)
 
 add_subdirectory(Face_Detection)
+add_subdirectory(Measure_Size_Object)
