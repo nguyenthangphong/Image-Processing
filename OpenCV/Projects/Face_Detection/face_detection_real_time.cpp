@@ -67,6 +67,8 @@ void detectAndDisplay(cv::Mat frame)
     std::vector<cv::Rect> faces;
     faceCascade.detectMultiScale(frameGray, faces);
 
+    std::cout << "Detected " << faces.size() << " faces." << std::endl;
+
     for (auto& face : faces)
     {
         cv::Mat faceROI = frameGray(face);
