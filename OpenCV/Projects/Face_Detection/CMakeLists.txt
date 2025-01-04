@@ -4,7 +4,7 @@ project(Face_Detection)
 
 find_package(OpenCV REQUIRED)
 
-add_executable(Face_Detection main.cpp)
+add_executable(Face_Detection face_detection_real_time.cpp)
 
 target_include_directories(Face_Detection PRIVATE ${OpenCV_INCLUDE_DIRS})
 
