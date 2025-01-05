@@ -1,8 +1,5 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
-#include <filesystem>
-
-namespace fs = cv::utils;
 
 int main(int argc, const char** argv)
 {
