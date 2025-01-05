@@ -1,5 +1,8 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
+#include <filesystem>
+
+namespace fs = cv::utils;
 
 int main(int argc, const char** argv)
 {
@@ -34,7 +37,8 @@ int main(int argc, const char** argv)
         /* Enter pressed */
         else if (key == 13)
         {
-            std::string imageName = "../../dataset/" + name + "/image_" + std::to_string(countImage) + ".jpg";
+            std::string path = argv[2];
+            std::string imageName = path + "/" + name + "/image_" + std::to_string(countImage) + ".jpg";
 
             if (!cv::imwrite(imageName, frame))
             {
