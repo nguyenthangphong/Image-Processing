@@ -4,7 +4,7 @@
 int main(int argc, const char** argv)
 {
     /* Load the haarcasecade */
-    std::string faceCascadeName = "../../haarcascades/haarcascade_frontalface_default.xml";
+    std::string faceCascadeName = "../../../haarcascades/haarcascade_frontalface_alt.xml";
     cv::CascadeClassifier faceCascade = cv::CascadeClassifier(faceCascadeName);
 
     if (faceCascade.empty())

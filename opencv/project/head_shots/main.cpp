@@ -1,5 +1,7 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
+#include <unistd.h>
+#include <sys/stat.h>
 
 int main(int argc, const char** argv)
 {
@@ -35,7 +37,20 @@ int main(int argc, const char** argv)
         else if (key == 13)
         {
             std::string path = argv[2];
-            std::string imageName = path + "/" + name + "/image_" + std::to_string(countImage) + ".jpg";
+            std::string datasetPath = path + "/" + name;
+
+            /* Create directory */
+            if (mkdir(datasetPath.c_str(), 0777) == 0)
+            {
+                std::cout << "Directory created: " << datasetPath << std::endl;
+            }
+            else
+            {
+                std::cerr << "Error: Could not create directory." << std::endl;
+                break;
+            }
+
+            std::string imageName = datasetPath + "/image_" + std::to_string(countImage) + ".jpg";
 
             if (!cv::imwrite(imageName, frame))
             {
