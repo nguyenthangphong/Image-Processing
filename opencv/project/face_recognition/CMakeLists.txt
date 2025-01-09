@@ -4,8 +4,6 @@ project(face_recognition)
 
 find_package(OpenCV REQUIRED)
 
-find_package(dlib REQUIRED)
-
 add_executable(
     face_recognition
     main.cpp
@@ -17,4 +15,4 @@ target_include_directories(
     ${OpenCV_INCLUDE_DIRS}
 )
 
-target_link_libraries(face_recognition ${OpenCV_LIBS} dlib::dlib)
+target_link_libraries(face_recognition ${OpenCV_LIBS})
