@@ -124,7 +124,7 @@ int main(int argc, const char **argv)
             dlib::matrix<float, 0, 1> testDescriptor = dlibFaceRecognitionResnetModelV1(faceChip);
 
             double minDistance = 1.0;
-            double threshold = 0.6;
+            double threshold = 0.5;
             std::string bestMatch = "Unknown";
 
             for (size_t i = 0; i < knownEncodings.size(); ++i)
@@ -145,7 +145,23 @@ int main(int argc, const char **argv)
             {
                 std::cout << "[INFO] No match found (distance: " << minDistance << ")" << std::endl;
             }
+
+            cv::rectangle(img, cv::Point(face.left(), face.top()), cv::Point(face.right(), face.bottom()), cv::Scalar(0, 255, 0), 2);
+            std::string label = (minDistance < threshold) ? bestMatch : "Unknown";
+            cv::putText(img, label, cv::Point(face.left(), face.top() - 10), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 255, 0), 2);
         }
+
+        cv::imshow("Result", img);
+
+        while (true)
+        {
+            if (cv::waitKey(10) == 'q')
+            {
+                break;
+            }
+        }
+
+        cv::destroyAllWindows();
     }
     catch (const std::exception &e)
     {
