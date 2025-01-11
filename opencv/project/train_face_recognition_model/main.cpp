@@ -69,7 +69,7 @@ int main(void)
         std::vector<dlib::matrix<float, 0, 1>> knownEncodings;
         std::vector<std::string> knownNames;
 
-        std::string datasetPath = "/home/phong/work/dataset/image/phong";
+        std::string datasetPath = "/home/phong/work/dataset/image";
         int imageCount = 0;
 
         for (const auto &entry : std::filesystem::recursive_directory_iterator(datasetPath))
