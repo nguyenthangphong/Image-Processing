@@ -2,22 +2,24 @@
 #include <iostream>
 #include <fstream>
 
-float decompanding(float pixelValue, const std::vector<cv::Point2f>& kneePoints)
+float decompanding(float x, const std::vector<cv::Point2f>& kneePoints)
 {
+    float y = 0.0f;
+
     for (size_t i = 0; i < kneePoints.size() - 1; ++i)
     {
         cv::Point2f p1 = kneePoints[i];
         cv::Point2f p2 = kneePoints[i + 1];
 
-        if (pixelValue >= p1.x && pixelValue <= p2.x)
+        if (x >= p1.x && x <= p2.x)
         {
             /* Linear interpolation between two break points */
-            float slope = (p2.y - p1.y) / (p2.x - p1.x);
-            return p1.y + slope * (pixelValue - p1.x);
+            y = p1.y + (x - p1.x) * ((p2.y - p1.y) / (p2.x - p1.x));
+            return y;
         }
     }
 
-    return pixelValue;
+    return x;
 }
 
 void writeLogFile(cv::Mat src, std::string logFilePath)
